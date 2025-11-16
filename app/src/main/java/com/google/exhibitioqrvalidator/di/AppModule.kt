@@ -4,11 +4,16 @@ import android.app.Application
 import com.google.exhibitioqrvalidator.data.manager.LocalUserManagerImplementation
 import com.google.exhibitioqrvalidator.data.remote.exhibitionAPi
 import com.google.exhibitioqrvalidator.domain.manager.usecases.AppEntryUseCases
+import com.google.exhibitioqrvalidator.domain.manager.usecases.ClearToken
 import com.google.exhibitioqrvalidator.domain.manager.usecases.LocalUserManager
 import com.google.exhibitioqrvalidator.domain.manager.usecases.LoginUseCases
 import com.google.exhibitioqrvalidator.domain.manager.usecases.ReadAppEntry
+import com.google.exhibitioqrvalidator.domain.manager.usecases.ReadToken
 import com.google.exhibitioqrvalidator.domain.manager.usecases.SaveAppEntry
+import com.google.exhibitioqrvalidator.domain.manager.usecases.SaveUserLogin
 import com.google.exhibitioqrvalidator.domain.manager.usecases.apiUseCases.loginUserasCase
+import com.google.exhibitioqrvalidator.domain.manager.usecases.readUserLogin
+import com.google.exhibitioqrvalidator.domain.manager.usecases.saveToken
 import com.google.exhibitioqrvalidator.domain.repo.authRepository
 import com.google.exhibitioqrvalidator.utils.Constants.MY_BASE_URL
 import dagger.Module
@@ -68,6 +73,11 @@ object AppModule {
     @Singleton
     fun provideAppEntryUseCases(localUserManager: LocalUserManager) = AppEntryUseCases(
         ReadAppEntry = ReadAppEntry(localUserManager),
-        SaveAppEntry = SaveAppEntry(localUserManager)
+        SaveAppEntry = SaveAppEntry(localUserManager),
+        saveToken = saveToken(localUserManager),
+        ClearToken = ClearToken(localUserManager),
+        SaveUserLogin= SaveUserLogin(localUserManager),
+        ReadToken = ReadToken(localUserManager),
+        readUserLogin = readUserLogin(localUserManager)
     )
 }

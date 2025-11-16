@@ -1,10 +1,12 @@
 package com.google.exhibitioqrvalidator.presentation.auth
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.exhibitioqrvalidator.domain.manager.usecases.LocalUserManager
 import com.google.exhibitioqrvalidator.domain.manager.usecases.LoginUseCases
 import com.google.exhibitioqrvalidator.domain.models.LoginResponse
 import com.google.exhibitioqrvalidator.domain.models.user
@@ -21,7 +23,8 @@ sealed class UiState<out T> {
 }
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val loginUseCases: LoginUseCases
+    private val loginUseCases: LoginUseCases,
+    private val localUserManager: LocalUserManager
 ) : ViewModel() {
 
     private val _loginState = MutableLiveData<UiState<LoginResponse>>()
@@ -35,6 +38,9 @@ class AuthViewModel @Inject constructor(
 
                 if (response.success) {
                     // ✅ only if API says success=true
+                    Log.d("token on Login", response.token)
+                    localUserManager.saveToken(response.token)
+                    localUserManager.saveUserLogin()
                     _loginState.value = UiState.Success(response)
                 } else {
                     // ❌ treat false as business error

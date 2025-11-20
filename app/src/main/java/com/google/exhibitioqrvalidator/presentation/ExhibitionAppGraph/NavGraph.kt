@@ -6,8 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.exhibitioqrvalidator.presentation.QrCodeNavigator.QRCodeNavigator
 import com.google.exhibitioqrvalidator.presentation.auth.LoginScreen
 import com.google.exhibitioqrvalidator.presentation.auth.RegisterScreen
+import com.google.exhibitioqrvalidator.presentation.home.HomeScreen
 import com.google.exhibitioqrvalidator.presentation.onBoarding.OnBoardingScreen
 import com.google.exhibitioqrvalidator.presentation.onBoarding.OnBoardingViewModel
 
@@ -27,7 +29,7 @@ fun NavGraph( startDestination: String,) {
             RegisterScreen(navController = navController)
         }
         composable(Route.AppStartDestination.route){
-            Text("Start Destination")
+            QRCodeNavigator()
         }
     }
 }

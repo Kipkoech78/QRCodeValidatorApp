@@ -11,9 +11,12 @@ import com.google.exhibitioqrvalidator.domain.manager.usecases.ReadAppEntry
 import com.google.exhibitioqrvalidator.domain.manager.usecases.ReadToken
 import com.google.exhibitioqrvalidator.domain.manager.usecases.SaveAppEntry
 import com.google.exhibitioqrvalidator.domain.manager.usecases.SaveUserLogin
+import com.google.exhibitioqrvalidator.domain.manager.usecases.MarkAttendanceUseCases
 import com.google.exhibitioqrvalidator.domain.manager.usecases.apiUseCases.loginUserasCase
+import com.google.exhibitioqrvalidator.domain.manager.usecases.apiUseCases.markAttendanceUseCases
 import com.google.exhibitioqrvalidator.domain.manager.usecases.readUserLogin
 import com.google.exhibitioqrvalidator.domain.manager.usecases.saveToken
+import com.google.exhibitioqrvalidator.domain.repo.APiRepository
 import com.google.exhibitioqrvalidator.domain.repo.authRepository
 import com.google.exhibitioqrvalidator.utils.Constants.MY_BASE_URL
 import dagger.Module
@@ -23,7 +26,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -53,16 +55,25 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun providesApiUseCases(authRepository: authRepository): LoginUseCases {
+    fun providesAttendanceRepo(exhibitionAPi: exhibitionAPi): APiRepository {
+        return APiRepository(exhibitionAPi)
+
+    }
+    @Provides
+    @Singleton
+    fun providesLoginUseCases(authRepository: authRepository, aPiRepository: APiRepository): LoginUseCases {
         return LoginUseCases(
-            loginUsers = loginUserasCase(authRepository)
+            loginUsers = loginUserasCase(authRepository),
         )
     }
+    @Provides
+    @Singleton
+    fun providesMarkAttendanceUseCases(aPiRepository: APiRepository): MarkAttendanceUseCases {
+        return MarkAttendanceUseCases(
+            markAttendance = markAttendanceUseCases(aPiRepository)
 
-
-
-
-
+        )
+    }
     @Provides
     @Singleton
     fun provideLocalUserManager(application: Application): LocalUserManager=
@@ -80,4 +91,6 @@ object AppModule {
         ReadToken = ReadToken(localUserManager),
         readUserLogin = readUserLogin(localUserManager)
     )
+
+
 }

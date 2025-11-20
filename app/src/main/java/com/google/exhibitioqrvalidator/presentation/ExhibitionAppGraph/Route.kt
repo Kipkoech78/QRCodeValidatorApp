@@ -6,4 +6,8 @@ sealed class Route(var route:String) {
     object OnBoardingScreen: Route(route = "OnBoardingScreen")
     object LoginScreen: Route(route = "LoginScreen")
     object RegisterScreen: Route(route = "RegisterScreen")
+    object AttendanceList: Route(route = "AttendanceList")
+    object QRCodeNavigator: Route(route = "QRCodeNavigator")
+ //   object RegisterScreen: Route(route = "RegisterScreen")
+
 }

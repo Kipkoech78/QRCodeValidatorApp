@@ -4,4 +4,5 @@ import com.google.exhibitioqrvalidator.domain.manager.usecases.apiUseCases.login
 
 data class LoginUseCases(
     val loginUsers: loginUserasCase,
+
     )

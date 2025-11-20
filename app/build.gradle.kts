@@ -98,6 +98,14 @@ dependencies {
     //def paging_version = ""
     implementation ("androidx.paging:paging-runtime:3.1.1")
     implementation ("androidx.paging:paging-compose:3.2.0-rc01")
+    // CameraX + MLKit scanner
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
+    implementation("com.google.mlkit:barcode-scanning:17.2.0")
+// Networking (Retrofit + Gson)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 }
 
